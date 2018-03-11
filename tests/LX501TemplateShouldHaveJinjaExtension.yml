@@ -7,15 +7,32 @@
       template:
         src: "hosts"
         dest: "/etc/hosts"
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: SHOULD NOT TURN UP - static src
+      template:
+        src: "{{ hosts_file }}"
+        dest: "/etc/hosts"
+        owner: root
+        group: root
+        mode: 0644
 
     - name: SHOULD NOT TURN UP - static src
       template:
         src: "hosts.j2"
         dest: "/etc/hosts"
+        owner: root
+        group: root
+        mode: 0644
 
     - name: SHOULD NOT TURN UP - with_items
       template:
         src: "{{ item }}"
         dest: "/etc/postfix/{{ item | basename | replace('.j2', '') }}"
+        owner: root
+        group: root
+        mode: 0644
       with_items:
         - "{{ postfix_config_files }}"
