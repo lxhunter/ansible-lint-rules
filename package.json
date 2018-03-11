@@ -1,0 +1,22 @@
+{
+  "name": "ansible-lint",
+  "version": "1.0.0",
+  "description": "This is the rule-set I use for my ansible roles. By linting the roles and playbooks you get an standarized setup and use best practices.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alexander Jaeger",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.17.1"
+  },
+  "nodemonConfig": {
+    "watch": ["tests/*", "rules/*"],
+    "ext": "py,yml",
+    "exec": "./tester.sh $1"
+  }
+}

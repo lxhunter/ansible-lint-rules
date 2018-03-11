@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+
+    - name: MUST LIGHT UP - static src
+      template:
+        src: "hosts"
+        dest: "/etc/hosts"
+
+    - name: SHOULD NOT TURN UP - static src
+      template:
+        src: "hosts.j2"
+        dest: "/etc/hosts"
+
+    - name: SHOULD NOT TURN UP - with_items
+      template:
+        src: "{{ item }}"
+        dest: "/etc/postfix/{{ item | basename | replace('.j2', '') }}"
+      with_items:
+        - "{{ postfix_config_files }}"

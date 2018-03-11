@@ -1,0 +1,219 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+
+    - name: MUST LIGHT UP - assemble - no owner, no group and no mode
+      assemble:
+        src: /etc/someapp/fragments
+        dest: /etc/someapp/someapp.conf
+
+    - name: MUST LIGHT UP - blockinfile - no owner, no group and no mode
+      blockinfile:
+        path: /etc/ssh/sshd_config
+        block: |
+          Match User ansible-agent
+          PasswordAuthentication no
+
+    - name: MUST LIGHT UP - copy - no owner, no group and no mode
+      copy:
+        src: /mine/sudoers
+        dest: /etc/sudoers
+        validate: /usr/sbin/visudo -cf %s
+
+    - name: MUST LIGHT UP - template - no owner, no group and no mode
+      template:
+        src: "hosts.j2"
+        dest: "/etc/hosts"
+
+    - name: SHOULD NOT TURN UP - assemble - owner, group and mode
+      assemble:
+        src: /etc/someapp/fragments
+        dest: /etc/someapp/someapp.conf
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: SHOULD NOT TURN UP - blockinfile - owner, group and mode
+      blockinfile:
+        path: /etc/ssh/sshd_config
+        block: |
+          Match User ansible-agent
+          PasswordAuthentication no
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: SHOULD NOT TURN UP - copy - owner, group and mode
+      copy:
+        src: /srv/myfiles/foo.conf
+        dest: /etc/foo.conf
+        owner: foo
+        group: foo
+        mode: u+rw,g-wx,o-rwx
+
+    - name: SHOULD NOT TURN UP - copy - owner, group and mode
+      copy:
+        src: /mine/ntp.conf
+        dest: /etc/ntp.conf
+        owner: root
+        group: root
+        mode: 0644
+        backup: yes
+
+    - name: SHOULD NOT TURN UP - template - owner, group and mode
+      template:
+        src: "hosts.j2"
+        dest: "/etc/hosts"
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: MUST LIGHT UP - file - no owner, no group and no mode
+      file:
+        path: /etc/foo.conf
+
+    - name: MUST LIGHT UP - file - no owner, no group and no mode
+      file:
+        path: /etc/foo.conf
+        state: file
+
+    - name: SHOULD NOT TURN UP - file - owner, group and mode
+      file:
+        path: /etc/foo.conf
+        owner: foo
+        group: foo
+        mode: 0644
+
+    - name: SHOULD NOT TURN UP - file - link
+      file:
+        src: /file/to/link/to
+        dest: /path/to/symlink
+        owner: foo
+        group: foo
+        state: link
+
+    - name: SHOULD NOT TURN UP - file - link
+      file:
+        src: '/tmp/{{ item.src }}'
+        dest: '{{ item.dest }}'
+        state: link
+      with_items:
+        - { src: 'x', dest: 'y' }
+        - { src: 'z', dest: 'k' }
+
+    - name: MUST LIGHT UP - file - no owner and no group
+      file:
+        path: /etc/foo.conf
+        state: touch
+        mode: "u=rw,g=r,o=r"
+
+    - name: MUST LIGHT UP - file - no owner and no group
+      file:
+        path: /etc/some_directory
+        state: directory
+        mode: 0755
+
+    - name: MUST LIGHT UP - get_url - no owner and no group
+      get_url:
+        url: http://example.com/path/file.conf
+        dest: /etc/foo.conf
+
+    - name: SHOULD NOT TURN UP - get_url
+      get_url:
+        url: http://example.com/path/file.conf
+        dest: /etc/foo.conf
+        owner: foo
+        group: foo
+        mode: 0644
+
+    - name: MUST LIGHT UP - ini_file - no owner, no group and no mode
+      ini_file:
+        path: /etc/anotherconf
+        section: drinks
+        option: temperature
+        value: cold
+        backup: yes
+
+    - name: SHOULD NOT TURN UP - ini_file
+      ini_file:
+        path: /etc/anotherconf
+        section: drinks
+        option: temperature
+        value: cold
+        backup: yes
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: MUST LIGHT UP - lineinfile - no owner, no group and no mode
+      lineinfile:
+        path: /etc/sudoers
+        state: absent
+        regexp: '^%wheel'
+
+    - name: SHOULD NOT TURN UP - lineinfile
+      lineinfile:
+        path: /etc/hosts
+        regexp: '^127\.0\.0\.1'
+        line: '127.0.0.1 localhost'
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: MUST LIGHT UP - replace - no owner, no group and no mode
+      replace:
+        path: /etc/hosts
+        regexp: '(\s+)old\.host\.name(\s+.*)?$'
+        replace: '\1new.host.name\2'
+        after: 'Start after line.*'
+        before: 'Start before line.*'
+        backup: yes
+
+    - name: SHOULD NOT TURN UP - replace
+      replace:
+        path: /home/jdoe/.ssh/known_hosts
+        regexp: '^old\.host\.name[^\n]*\n'
+        owner: jdoe
+        group: jdoe
+        mode: 0644
+
+    - name: MUST LIGHT UP - unarchive - no owner, no group and no mode
+      unarchive:
+        src: /tmp/foo.zip
+        dest: /usr/local/bin
+        remote_src: yes
+
+    - name: SHOULD NOT TURN UP - unarchive
+      unarchive:
+        src: /tmp/foo.zip
+        dest: /usr/local/bin
+        remote_src: yes
+        owner: jdoe
+        group: jdoe
+        mode: 0644
+
+    - name: MUST LIGHT UP - yum_repository - no owner, no group and no mode
+      yum_repository:
+        name: epel
+        description: EPEL YUM repo
+        file: external_repos
+        baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+        gpgcheck: no
+
+    - name: SHOULD NOT TURN UP - yum_repository
+      yum_repository:
+        name: epel
+        description: EPEL YUM repo
+        file: external_repos
+        baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+        gpgcheck: no
+        owner: jdoe
+        group: jdoe
+        mode: 0644
+
+    - name: SHOULD NOT TURN UP - yum_repository - absent
+      yum_repository:
+        name: epel
+        file: external_repos
+        state: absent
