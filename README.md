@@ -21,7 +21,7 @@ $ git clone https://github.com/lxhunter/ansible-lint.git /usr/local/src/ansible-
 **Pro-Tip:** I use [fresh](https://freshshell.com) for this:
 
 ```bash
-$ fresh lxhunter/ansible-lint rules/ --file=/usr/local/src/ansible-lint
+$ fresh lxhunter/ansible-lint . --file=/usr/local/src/ansible-lint
 ```
 
 ## Usage
@@ -30,9 +30,9 @@ Now you can lint your playbooks by doing:
 
 ```bash
 # just my rules
-$ ansible-lint -r /usr/local/src/ansible-lint playbook.yml
+$ ansible-lint -r /usr/local/src/ansible-lint/rules playbook.yml
 # or for the standard rule and mine
-$ ansible-lint -R -r /usr/local/src/ansible-lint playbook.yml
+$ ansible-lint -R -r /usr/local/src/ansible-lint/rules playbook.yml
 ```
 
 ## Rules
@@ -70,6 +70,7 @@ nodemon LX401
 ```
 
 ## Credits
+
 * [Initial Idea from Will Thames](https://github.com/willthames/ansible-lint)
 * [Learned a lot from shirou and his rules](https://github.com/shirou)
 
