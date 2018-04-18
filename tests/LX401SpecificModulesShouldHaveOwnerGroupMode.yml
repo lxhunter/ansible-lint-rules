@@ -1,6 +1,6 @@
 ---
 - hosts: localhost
-  gather_facts: no
+  gather_facts: false
   tasks:
 
     - name: MUST LIGHT UP - assemble - no owner, no group and no mode
