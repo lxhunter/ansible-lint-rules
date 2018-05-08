@@ -1,21 +1,46 @@
 {
-  "name": "ansible-lint",
+  "name": "ansible-lint-rules",
   "version": "1.0.0",
   "description": "This is the rule-set I use for my ansible roles. By linting the roles and playbooks you get an standarized setup and use best practices.",
-  "main": "index.js",
+  "keywords": [
+    "ansible",
+    "lint"
+  ],
   "directories": {
     "test": "tests"
+  },
+  "homepage": "https://github.com/lxhunter/ansible-lint-rules",
+  "bugs": {
+    "url": "https://github.com/lxhunter/ansible-lint-rules/issues",
+    "email": "alexander.jaeger@brandfrisch.com"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Alexander Jäger",
+    "email": "alexander.jaeger@brandfrisch.com"
+  },
+  "contributors": [
+    "Christian Kappen <christian.kappen@live.de> (https://github.com/ckappen)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lxhunter/ansible-lint-rules.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Alexander Jaeger",
-  "license": "MIT",
+  "dependencies": {},
   "devDependencies": {
     "nodemon": "^1.17.1"
   },
+  "engines": {
+    "node": ">= 8"
+  },
   "nodemonConfig": {
-    "watch": ["tests/*", "rules/*"],
+    "watch": [
+      "tests/*",
+      "rules/*"
+    ],
     "ext": "py,yml",
     "exec": "./tester.sh $1"
   }
