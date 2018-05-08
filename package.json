@@ -16,7 +16,7 @@
   },
   "license": "MIT",
   "author": {
-    "name": "Alexander Jäger",
+    "name": "Alexander Jaeger",
     "email": "alexander.jaeger@brandfrisch.com"
   },
   "contributors": [
@@ -30,7 +30,39 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {},
+  "release": {
+    "tagFormat": "${version}",
+    "verifyConditions": [
+      "@semantic-release/npm"
+    ],
+    "publish": [
+      {
+        "path": "@semantic-release/github"
+      },
+      {
+        "path": "@semantic-release/npm"
+      }
+    ],
+    "analyzeCommits": {
+      "parserOpts": {
+        "noteKeywords": [
+          "BREAKING CHANGE",
+          "BREAKING CHANGES",
+          "BREAKING"
+        ]
+      }
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "./node_modules/@commitlint/config-conventional"
+    ]
+  },
   "devDependencies": {
+    "@commitlint/cli": "^6.1.2",
+    "@commitlint/config-conventional": "^6.1.2",
+    "@semantic-release/exec": "^2.0.1",
+    "semantic-release": "^13.4.1",
     "nodemon": "^1.17.1"
   },
   "engines": {
