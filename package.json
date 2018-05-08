@@ -12,12 +12,12 @@
   "homepage": "https://github.com/lxhunter/ansible-lint-rules",
   "bugs": {
     "url": "https://github.com/lxhunter/ansible-lint-rules/issues",
-    "email": "alexander.jaeger@brandfrisch.com"
+    "email": "alexander.jaeger@me.com"
   },
   "license": "MIT",
   "author": {
     "name": "Alexander Jaeger",
-    "email": "alexander.jaeger@brandfrisch.com"
+    "email": "alexander.jaeger@me.com"
   },
   "contributors": [
     "Christian Kappen <christian.kappen@live.de> (https://github.com/ckappen)"
