@@ -2,13 +2,8 @@
 version: 2
 jobs:
 
-  build:
-    machine:
-      enabled: true
-
-    working_directory: ~/ansible-lint-rules
-
   release:
+
     docker:
       - image: circleci/node:8
 
