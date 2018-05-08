@@ -39,9 +39,7 @@
       {
         "path": "@semantic-release/github"
       },
-      {
-        "path": "@semantic-release/npm"
-      }
+      "@semantic-release/npm"
     ],
     "analyzeCommits": {
       "parserOpts": {
