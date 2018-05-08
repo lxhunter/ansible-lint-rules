@@ -1,0 +1,36 @@
+---
+version: 2
+jobs:
+
+  build:
+    machine:
+      enabled: true
+
+    working_directory: ~/ansible-lint-rules
+
+  release:
+    docker:
+      - image: circleci/node:8
+
+    steps:
+      - checkout:
+          path: ~/ansible-lint-rules
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-node-{{ checksum "package.json" }}
+
+      - run:
+          name: "Install node dependencies"
+          command: |
+            npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-node-{{ checksum "package.json" }}
+
+      - run:
+          name: "Release role"
+          command: |
+            ./node_modules/.bin/semantic-release
