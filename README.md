@@ -33,6 +33,7 @@ Now you can lint your playbooks by doing:
 $ ansible-lint -r /usr/local/src/ansible-lint/rules playbook.yml
 # or for the standard rule and mine
 $ ansible-lint -R -r /usr/local/src/ansible-lint/rules playbook.yml
+# geek
 ```
 
 ## Rules
